@@ -2,8 +2,8 @@ from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm.session import Session
 
 from bd import get_db
-from schemas import TaskCreateSchema, TaskSchema, TaskUpdateDoneSchema, TaskUpdateSchema
-from storage import (
+from schemas.tasks_schema import TaskCreateSchema, TaskSchema, TaskUpdateDoneSchema, TaskUpdateSchema
+from repository.tasks_repository import (
     create_task,
     get_all_tasks,
     get_done_true,

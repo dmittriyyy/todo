@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
-from models import Tasks
-from schemas import TaskCreateSchema, TaskSchema, TaskUpdateDoneSchema, TaskUpdateSchema
+from models.tasks import Tasks
+from schemas.tasks_schema import TaskCreateSchema, TaskSchema, TaskUpdateDoneSchema, TaskUpdateSchema
 
 
 def get_all_tasks(db: Session):
