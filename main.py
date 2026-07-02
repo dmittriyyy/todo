@@ -1,8 +1,7 @@
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm.session import Session
 
-from bd import get_db
-from schemas.tasks_schema import TaskCreateSchema, TaskSchema, TaskUpdateDoneSchema, TaskUpdateSchema
+from bd import Base, engine, get_db
 from repository.tasks_repository import (
     create_task,
     get_all_tasks,
@@ -11,7 +10,14 @@ from repository.tasks_repository import (
     task_update,
     update_done,
 )
+from schemas.tasks_schema import (
+    TaskCreateSchema,
+    TaskSchema,
+    TaskUpdateDoneSchema,
+    TaskUpdateSchema,
+)
 
+Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 

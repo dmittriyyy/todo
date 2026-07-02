@@ -1,15 +1,19 @@
-from sqlalchemy import Boolean, Column, Integer, String
+from sqlalchemy import Boolean, Column, DateTime, Integer, String
+from sqlalchemy.orm import relationship
+from sqlalchemy.schema import ForeignKey
 
-from bd import Base, engine
+from bd import Base
 
 
 class Tasks(Base):
     __tablename__ = "tasks"
 
     id = Column(Integer, primary_key=True)
-    title = Column(String)
+    title = Column(String, nullable=False)
     description = Column(String)
     done = Column(Boolean, default=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    date_to = Column(DateTime(timezone=True), nullable=True)
 
-
-Base.metadata.create_all(engine)
+    owner = relationship("Users", back_populates="tasks")
