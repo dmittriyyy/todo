@@ -10,7 +10,7 @@ from schemas.tasks_schema import (
 
 
 def get_all_tasks(db: Session, user_id: int):
-    return db.query(Tasks.user_id == user_id).all()
+    return db.query(Tasks).filter(Tasks.user_id == user_id).all()
 
 
 def get_task_for_id(db: Session, task_id: int, user_id: int):
@@ -61,3 +61,11 @@ def task_update(db: Session, task_id: int, user_id: int, update_task: TaskUpdate
     db.commit()
     db.refresh(task)
     return TaskSchema.model_validate(task)
+
+
+def task_del(db: Session, task_id: int, user_id: int):
+    task = (
+        db.query(Tasks).filter(Tasks.id == task_id, Tasks.user_id == user_id).delete()
+    )
+    db.commit()
+    return task > 0
